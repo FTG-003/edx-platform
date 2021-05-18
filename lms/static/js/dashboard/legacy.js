@@ -224,6 +224,41 @@
              return false;
          });
 
+         $('#send_cta_email').click(function(e) {
+             $.ajax({
+                 type: 'POST',
+                 url: urls.sendAccountActivationEmail,
+                 data: $(this).serializeArray(),
+                 success: function() {
+
+                   $('#activate-account-modal p span').removeClass('fa-spinner fa-pulse');
+                   $('#activate-account-modal p span').addClass('fa-check');
+                   $('#activate-account-modal p span').css('color', 'green');
+                 },
+             });
+             e.preventDefault();
+             if ($('#activate-account-modal p span').length === 0) {
+                $('#activate-account-modal p').append("<span class='icon fa fa-spinner fa-pulse' aria-hidden='true'></span>");
+             }
+             if ($('#activate-account-modal p span').length === 1) {
+
+                $('#activate-account-modal p span').removeClass('fa-check');
+                $('#activate-account-modal p span').addClass('fa-spinner fa-pulse');
+                $('#activate-account-modal p span').css('color', '#00688D');
+             }
+         });
+
+         $('#activate-account-modal').on('click', '#button', function() {
+             $('#activate-account-modal').css('display', 'none');
+             $('#lean_overlay').css({display: 'none'});
+         });
+         if ($('#activate-account-modal').css('display') === 'block') {
+             $('#lean_overlay').css({
+                 display: 'block',
+                 'z-index': 0
+             });
+         }
+
          $('.action-email-settings').each(function(index) {
              $(this).attr('id', 'email-settings-' + index);
             // a bit of a hack, but gets the unique selector for the modal trigger
