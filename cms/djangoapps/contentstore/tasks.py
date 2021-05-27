@@ -9,6 +9,7 @@ import shutil  # lint-amnesty, pylint: disable=wrong-import-order
 import tarfile  # lint-amnesty, pylint: disable=wrong-import-order
 from datetime import datetime  # lint-amnesty, pylint: disable=wrong-import-order
 from tempfile import NamedTemporaryFile, mkdtemp  # lint-amnesty, pylint: disable=wrong-import-order
+from typing import List
 
 import olxcleaner
 import pkg_resources
@@ -668,7 +669,19 @@ def import_olx(self, user_id, course_key_string, archive_path, archive_name, lan
 
 @shared_task
 @set_code_owner_attribute
-def update_outline_from_modulestore_task(course_key_str):
+def update_multiple_outlines_from_modulestore_task(course_key_list: List[str]):
+    """
+    Celery task that creates multiple celery tasks - one per learning_sequence course outline
+    in the passed-in list.
+    """
+    for course_key_str in course_key_list:
+        # Perform all the error-checking in the child celery tasks.
+        update_outline_from_modulestore_task.delay(course_key_str)
+
+
+@shared_task
+@set_code_owner_attribute
+def update_outline_from_modulestore_task(course_key_str: str):
     """
     Celery task that creates a learning_sequence course outline.
     """
