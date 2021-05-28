@@ -65,7 +65,7 @@ from xmodule.modulestore.xml_importer import import_course_from_xml, import_libr
 
 from .exceptions import CourseImportException
 from .outlines import update_outline_from_modulestore
-from .outlines_backfill import CourseOutlineBackfill
+from .outlines_regenerate import CourseOutlineRegenerate
 from .toggles import bypass_olx_failure_enabled
 from .utils import course_import_olx_validation_is_enabled
 
@@ -672,9 +672,9 @@ def import_olx(self, user_id, course_key_string, archive_path, archive_name, lan
 def update_all_outlines_from_modulestore_task():
     """
     Celery task that creates multiple celery tasks - one per learning_sequence course outline
-    to backfill. The list of course keys to backfill comes from the proxy model itself.
+    to regenerate. The list of course keys to regenerate comes from the proxy model itself.
     """
-    course_key_list = [str(course_key) for course_key in CourseOutlineBackfill.get_course_outline_ids()]
+    course_key_list = [str(course_key) for course_key in CourseOutlineRegenerate.get_course_outline_ids()]
     for course_key_str in course_key_list:
         try:
             course_key = CourseKey.from_string(course_key_str)

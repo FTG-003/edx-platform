@@ -1,17 +1,17 @@
 """
 Defines a proxy model to enable a Django admin interface to trigger asynch
-tasks which backfill/recreate course outline data.
+tasks which regenerates course outline data.
 """
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 
 
-class CourseOutlineBackfill(CourseOverview):
+class CourseOutlineRegenerate(CourseOverview):
     """
     Proxy model for CourseOverview.
 
     Does *not* create/update/delete CourseOverview objects - only reads the objects.
     Uses the course IDs of the CourseOverview objects to determine which course
-    outlines to re-build/backfill.
+    outlines to regenerate.
     """
     class Meta:
         proxy = True
