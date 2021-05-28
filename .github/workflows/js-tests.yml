@@ -35,10 +35,12 @@ jobs:
         pip install setuptools wheel
         pip install -r requirements/edx/development.txt
 
-    - name: Run Tests
+    - name: Install Node
       uses: actions/setup-node@v2
       with:
         node-version: '12'
+
+    - name: Run Tests
       env:
         FIREFOX_BIN: /usr/bin/firefox
         TEST_SUITE: js-unit
