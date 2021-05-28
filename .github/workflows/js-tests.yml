@@ -17,12 +17,6 @@ jobs:
         python-version: [ '3.8' ]
 
     steps:
-    - name: Get Jenkins Worker
-      run: |
-        docker pull edxops/jenkins_worker
-        docker run edxops/jenkins_worker
-        docker exec -it edxops/jenkins_worker pwd
-
     - uses: actions/checkout@v2
     - name: setup python
       uses: actions/setup-python@v2
@@ -32,13 +26,6 @@ jobs:
     - name: Install Required Packages
       run: |
         sudo apt-get update && sudo apt-get install libxmlsec1-dev
-    - name: Install pip
-      run: pip install -r requirements/edx/pip-tools.txt
-
-    - name: Install Node
-      uses: actions/setup-node@v2
-      with:
-        node-version: '12'
 
     - name: Install Python Dependencies
       run: |
