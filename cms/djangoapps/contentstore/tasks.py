@@ -689,7 +689,7 @@ def update_all_outlines_from_modulestore_task():
                 return
 
             update_outline_from_modulestore_task.delay(course_key_str)
-        except Exception:  # pylint disable=broad-except
+        except Exception:  # pylint: disable=broad-except
             # Swallow the exception to continue the loop through course keys - but log it.
             LOGGER.exception("Could not create course outline for course %s", course_key_str)
 
@@ -713,7 +713,7 @@ def update_outline_from_modulestore_task(course_key_str: str):
             return
 
         update_outline_from_modulestore(course_key)
-    except Exception:  # pylint disable=broad-except
+    except Exception:  # pylint: disable=broad-except
         LOGGER.exception("Could not create course outline for course %s", course_key_str)
         raise  # Re-raise so that errors are noted in reporting.
 

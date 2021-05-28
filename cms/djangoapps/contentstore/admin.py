@@ -68,7 +68,9 @@ def regenerate_course_outlines_subset(modeladmin, request, queryset):
             regenerates += 1
         else:
             log.info("Outlines not supported for %s - skipping", course_key)
-    msg = _("Number of course outline regenerations successfully requested: {regenerates}".format(regenerates=regenerates))
+    msg = _("Number of course outline regenerations successfully requested: {regenerates}").format(
+        regenerates=regenerates
+    )
     modeladmin.message_user(request, msg)
 regenerate_course_outlines_subset.short_description = _("Regenerate selected course outlines")
 
