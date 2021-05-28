@@ -35,8 +35,10 @@ jobs:
         pip install setuptools wheel
         pip install -r requirements/edx/development.txt
 
-    - uses: browser-actions/setup-geckodriver@latest
+    - uses: actions/setup-node@v2
     - name: Run Tests
+      with:
+        node-version: '12'
       env:
         FIREFOX_BIN: /usr/bin/firefox
         TEST_SUITE: js-unit
